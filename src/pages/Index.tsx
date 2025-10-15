@@ -301,17 +301,61 @@ const Index = () => {
                 <h3 className="text-xl font-serif font-semibold mb-4">О себе</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
+                    <Label>Фамилия</Label>
+                    <Input placeholder="Иванов" className="rounded-xl h-11" />
+                  </div>
+                  <div className="space-y-2">
                     <Label>Имя</Label>
-                    <Input placeholder="Ваше имя" className="rounded-xl h-11" />
+                    <Input placeholder="Иван" className="rounded-xl h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Отчество</Label>
+                    <Input placeholder="Иванович" className="rounded-xl h-11" />
                   </div>
                   <div className="space-y-2">
                     <Label>Возраст</Label>
-                    <Input type="number" placeholder="30" className="rounded-xl h-11" />
+                    <Input type="number" placeholder="35" className="rounded-xl h-11" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Рост (см)</Label>
+                    <Input type="number" placeholder="180" className="rounded-xl h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Вес (кг)</Label>
+                    <Input type="number" placeholder="75" className="rounded-xl h-11" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Город</Label>
+                  <Label>Город проживания</Label>
                   <Input placeholder="Москва" className="rounded-xl h-11" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Семейное положение</Label>
+                  <Select>
+                    <SelectTrigger className="rounded-xl h-11">
+                      <SelectValue placeholder="Выберите" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="never">Никогда не был(а) в браке</SelectItem>
+                      <SelectItem value="divorced">В разводе</SelectItem>
+                      <SelectItem value="widowed">Вдовец/вдова</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Есть ли дети?</Label>
+                  <RadioGroup defaultValue="no">
+                    <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
+                      <RadioGroupItem value="no" id="children-no" />
+                      <Label htmlFor="children-no" className="cursor-pointer flex-1">Нет</Label>
+                    </div>
+                    <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
+                      <RadioGroupItem value="yes" id="children-yes" />
+                      <Label htmlFor="children-yes" className="cursor-pointer flex-1">Да (укажите количество и возраст в описании)</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
                 <div className="space-y-2">
                   <Label>Образование</Label>
@@ -321,53 +365,140 @@ const Index = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="higher">Высшее</SelectItem>
-                      <SelectItem value="incomplete">Неоконченное высшее</SelectItem>
+                      <SelectItem value="incomplete-higher">Неоконченное высшее</SelectItem>
+                      <SelectItem value="secondary-professional">Среднее специальное</SelectItem>
                       <SelectItem value="secondary">Среднее</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>О себе</Label>
-                  <Textarea placeholder="Расскажите о себе..." className="rounded-xl min-h-24" />
+                  <Label>Род занятий / профессия</Label>
+                  <Input placeholder="Например: инженер, предприниматель" className="rounded-xl h-11" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Вероисповедание</Label>
+                  <Select>
+                    <SelectTrigger className="rounded-xl h-11">
+                      <SelectValue placeholder="Выберите" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="orthodox">Православие</SelectItem>
+                      <SelectItem value="islam">Ислам</SelectItem>
+                      <SelectItem value="catholic">Католицизм</SelectItem>
+                      <SelectItem value="other">Другое</SelectItem>
+                      <SelectItem value="none">Не религиозен(на)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>О себе (хобби, характер, интересы)</Label>
+                  <Textarea placeholder="Расскажите о себе, своих увлечениях, жизненных ценностях..." className="rounded-xl min-h-32" />
                 </div>
               </div>
             )}
 
             {formStep === 2 && (
               <div className="space-y-5 animate-fade-in">
-                <h3 className="text-xl font-serif font-semibold mb-4">О партнёре</h3>
+                <h3 className="text-xl font-serif font-semibold mb-4">Кого ищу</h3>
                 <div className="space-y-2">
-                  <Label>Желаемый возраст</Label>
+                  <Label>Желаемый возраст {formType === "wife" ? "супруги" : "супруга"}</Label>
                   <div className="flex gap-3 items-center">
                     <Input type="number" placeholder="От" className="rounded-xl h-11" />
                     <span className="text-muted-foreground">—</span>
                     <Input type="number" placeholder="До" className="rounded-xl h-11" />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Желаемый рост (см)</Label>
+                    <div className="flex gap-2 items-center">
+                      <Input type="number" placeholder="От" className="rounded-xl h-11" />
+                      <span className="text-muted-foreground">—</span>
+                      <Input type="number" placeholder="До" className="rounded-xl h-11" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Желаемый вес (кг)</Label>
+                    <div className="flex gap-2 items-center">
+                      <Input type="number" placeholder="От" className="rounded-xl h-11" />
+                      <span className="text-muted-foreground">—</span>
+                      <Input type="number" placeholder="До" className="rounded-xl h-11" />
+                    </div>
+                  </div>
+                </div>
                 <div className="space-y-2">
-                  <Label>Город проживания</Label>
-                  <Input placeholder="Москва" className="rounded-xl h-11" />
+                  <Label>Город проживания (или регион)</Label>
+                  <Input placeholder="Москва, Московская область" className="rounded-xl h-11" />
                 </div>
                 <div className="space-y-2">
                   <Label>Семейное положение</Label>
                   <RadioGroup defaultValue="any">
                     <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
-                      <RadioGroupItem value="single" id="single" />
-                      <Label htmlFor="single" className="cursor-pointer flex-1">Не был(а) в браке</Label>
+                      <RadioGroupItem value="never" id="partner-never" />
+                      <Label htmlFor="partner-never" className="cursor-pointer flex-1">Никогда не был(а) в браке</Label>
                     </div>
                     <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
-                      <RadioGroupItem value="divorced" id="divorced" />
-                      <Label htmlFor="divorced" className="cursor-pointer flex-1">В разводе</Label>
+                      <RadioGroupItem value="divorced" id="partner-divorced" />
+                      <Label htmlFor="partner-divorced" className="cursor-pointer flex-1">В разводе (без детей или с детьми)</Label>
                     </div>
                     <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
-                      <RadioGroupItem value="any" id="any" />
-                      <Label htmlFor="any" className="cursor-pointer flex-1">Не имеет значения</Label>
+                      <RadioGroupItem value="any" id="partner-any" />
+                      <Label htmlFor="partner-any" className="cursor-pointer flex-1">Не имеет значения</Label>
                     </div>
                   </RadioGroup>
                 </div>
                 <div className="space-y-2">
+                  <Label>Наличие детей у партнёра</Label>
+                  <RadioGroup defaultValue="any">
+                    <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
+                      <RadioGroupItem value="no" id="partner-children-no" />
+                      <Label htmlFor="partner-children-no" className="cursor-pointer flex-1">Без детей</Label>
+                    </div>
+                    <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
+                      <RadioGroupItem value="yes" id="partner-children-yes" />
+                      <Label htmlFor="partner-children-yes" className="cursor-pointer flex-1">Дети не помеха</Label>
+                    </div>
+                    <div className="flex items-center space-x-2 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors">
+                      <RadioGroupItem value="any" id="partner-children-any" />
+                      <Label htmlFor="partner-children-any" className="cursor-pointer flex-1">Не важно</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+                <div className="space-y-2">
+                  <Label>Образование</Label>
+                  <Select>
+                    <SelectTrigger className="rounded-xl h-11">
+                      <SelectValue placeholder="Выберите" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="higher">Высшее</SelectItem>
+                      <SelectItem value="secondary">Среднее и выше</SelectItem>
+                      <SelectItem value="any">Не важно</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Вероисповедание</Label>
+                  <Select>
+                    <SelectTrigger className="rounded-xl h-11">
+                      <SelectValue placeholder="Выберите" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="orthodox">Православие</SelectItem>
+                      <SelectItem value="islam">Ислам</SelectItem>
+                      <SelectItem value="catholic">Католицизм</SelectItem>
+                      <SelectItem value="other">Другое</SelectItem>
+                      <SelectItem value="any">Не важно</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Черты характера и качества, важные для вас</Label>
+                  <Textarea placeholder="Например: доброта, честность, чувство юмора, общие интересы..." className="rounded-xl min-h-28" />
+                </div>
+                <div className="space-y-2">
                   <Label>Дополнительные пожелания</Label>
-                  <Textarea placeholder="Что важно для вас в партнёре..." className="rounded-xl min-h-24" />
+                  <Textarea placeholder="Любые другие важные для вас детали..." className="rounded-xl min-h-24" />
                 </div>
               </div>
             )}
